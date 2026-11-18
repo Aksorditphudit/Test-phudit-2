@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>คณิตศาสตร์ ป.1: บวก ลบ เลขไม่เกิน 10 หน่วย — ครูโบท</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-soft: #f0f5ff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --secondary: #0f766e;
+      --accent: #f59e0b;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --warning-bg: #fef3c7;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --radius: 16px;
+      --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Sarabun", "Tahoma", "Leelawadee UI", "Noto Sans Thai", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+      color: #ffffff;
+      padding: 14px 20px;
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-sub {
+      font-size: 0.85rem;
+      opacity: 0.92;
+    }
+
+    .btn-teacher {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      border: 1.5px solid rgba(255, 255, 255, 0.65);
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-teacher:hover {
+      background: #ffffff;
+      color: #1e40af;
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 960px;
+      margin: 20px auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 20px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Badges & Pills */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .badge {
+      background: var(--surface-soft);
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid #bfdbfe;
+    }
+
+    .badge-amber {
+      background: #fffbeb;
+      color: #b45309;
+      border-color: #fde68a;
+    }
+
+    .badge-teal {
+      background: #f0fdfa;
+      color: #0f766e;
+      border-color: #99f6e4;
+    }
+
+    /* Typography */
+    h1 {
+      font-size: 1.55rem;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+
+    p.muted {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Form Controls */
+    .input-group {
+      margin: 18px 0;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    input[type="number"],
+    input[type="text"],
+    select {
+      width: 100%;
+      max-width: 320px;
+      padding: 12px 16px;
+      font-size: 1.15rem;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+
+    input[type="number"]:focus,
+    input[type="text"]:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .hint-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 22px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s, background-color 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+      min-height: 46px;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+    }
+
+    .btn-success:hover {
+      background: #15803d;
+    }
+
+    .btn-sm {
+      padding: 8px 14px;
+      font-size: 0.92rem;
+      min-height: 38px;
+    }
+
+    /* Inline Message Banner */
+    .alert-box {
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 12px 0;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .alert-error {
+      background: var(--danger-bg);
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+
+    .alert-info {
+      background: #e0f2fe;
+      color: #075985;
+      border: 1px solid #7dd3fc;
+    }
+
+    .alert-warning {
+      background: var(--warning-bg);
+      color: #92400e;
+      border: 1px solid #fcd34d;
+    }
+
+    /* Quiz Top Bar */
+    .quiz-status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .timer-pill {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb, #10b981);
+      width: 10%;
+      transition: width 0.3s ease;
+    }
+
+    /* Question Navigator Pills */
+    .q-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .q-nav-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+
+    .q-pill {
+      padding: 8px 4px;
+      border-radius: 10px;
+      border: 2px solid #cbd5e1;
+      background: #ffffff;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+
+    .q-pill.active {
+      border-color: var(--primary);
+      background: #eff6ff;
+      color: var(--primary);
+    }
+
+    .q-pill.answered {
+      background: #dcfce7;
+      border-color: #86efac;
+      color: #166534;
+    }
+
+    .q-pill.active.answered {
+      border-color: var(--primary);
+    }
+
+    /* Problem Box */
+    .problem-box {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    .problem-type-tag {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #0f766e;
+      background: #ccfbf1;
+      padding: 3px 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .problem-story {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 12px;
+    }
+
+    .math-equation-display {
+      display: inline-block;
+      background: #ffffff;
+      border: 2px dashed #93c5fd;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #1e3a8a;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+
+    /* Visual Ten-Frame / Counters */
+    .visual-aid {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 8px;
+    }
+
+    .visual-caption {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .ten-frame {
+      display: inline-grid;
+      grid-template-columns: repeat(5, 34px);
+      grid-template-rows: repeat(2, 34px);
+      gap: 5px;
+      background: #f1f5f9;
+      padding: 6px;
+      border-radius: 10px;
+      border: 2px solid #94a3b8;
+    }
+
+    .tf-cell {
+      width: 34px;
+      height: 34px;
+      background: #ffffff;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+    }
+
+    .dot-blue {
+      background: #2563eb;
+    }
+
+    .dot-amber {
+      background: #f59e0b;
+    }
+
+    .dot-crossed {
+      background: #94a3b8;
+      position: relative;
+      opacity: 0.55;
+    }
+
+    .dot-crossed::after {
+      content: "×";
+      color: #dc2626;
+      font-weight: 900;
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    /* Instant Practice Check Feedback */
+    .feedback-panel {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .feedback-correct {
+      background: #f0fdf4;
+      border-color: #86efac;
+    }
+
+    .feedback-wrong {
+      background: #fef2f2;
+      border-color: #fca5a5;
+    }
+
+    .nav-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    /* Rubric Table */
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      background: #ffffff;
+    }
+
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eff6ff;
+      color: #1e3a8a;
+      font-weight: 700;
+    }
+
+    /* Summary Review List */
+    .review-item {
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+      background: #ffffff;
+    }
+
+    .review-item.ok {
+      border-left: 6px solid var(--success);
+    }
+
+    .review-item.no {
+      border-left: 6px solid var(--danger);
+    }
+
+    .score-banner {
+      text-align: center;
+      padding: 24px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+      border: 2px solid #bfdbfe;
+      margin-bottom: 20px;
+    }
+
+    .score-big {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.1;
+      margin: 8px 0;
+    }
+
+    /* Teacher Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 100;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 14px 0;
+    }
+
+    .stat-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .stat-val {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 18px 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid #e2e8f0;
+      background: #ffffff;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div>
+        <div class="brand-title">🧮 คณิตศาสตร์ ป.1: บวก ลบ เลขไม่เกิน 10 หน่วย</div>
+        <div class="brand-sub">ผู้สร้าง: ครูโบท | โรงเรียน: บ้านปางหมู</div>
+      </div>
+      <button type="button" id="openTeacherBtn" class="btn-teacher">👩‍🏫 โหมดครู</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Global Inline Alert Box -->
+    <div id="globalAlert" class="alert-box alert-error hidden" role="alert">
+      <span id="globalAlertText"></span>
+      <button type="button" id="closeAlertBtn" class="btn btn-sm btn-secondary">ปิด</button>
+    </div>
+
+    <!-- SCREEN 1: START / STUDENT NUMBER ENTRY -->
+    <section id="startScreen" class="card">
+      <div class="badge-row">
+        <span class="badge">วิชา: คณิตศาสตร์พื้นฐาน ป.1</span>
+        <span class="badge badge-teal">จำนวน 10 ข้อ | เวลา 20 นาที</span>
+        <span class="badge badge-amber">โหมดฝึกซ้อม (ทำซ้ำได้)</span>
+      </div>
+
+      <h1>กิจกรรมฝึกทักษะ: บวก ลบ เลขไม่เกิน 10 หน่วย</h1>
+      <p class="muted">
+        <strong>จุดประสงค์การเรียนรู้:</strong> นักเรียนสามารถคำนวณหาผลบวกและผลลบของจำนวนนับไม่เกิน 10 ได้อย่างถูกต้อง<br />
+        <strong>รูปแบบกิจกรรม:</strong> อัตนัยคำตอบสั้น (พิมพ์ตัวเลขคำตอบที่ถูกต้อง พร้อมดูวิธีคิดและเกณฑ์การประเมิน)
+      </p>
+
+      <div class="input-group">
+        <label for="studentNoInput">กรอกเลขที่ของนักเรียน (1 – 10):</label>
+        <input
+          type="number"
+          id="studentNoInput"
+          min="1"
+          max="10"
+          step="1"
+          inputmode="numeric"
+          placeholder="เช่น 1"
+        />
+        <div class="hint-text">
+          * ระบบจะสร้างชุดโจทย์เฉพาะเลขที่ของนักเรียน (เลขที่เดิมจะได้โจทย์ชุดเดิมเสมอเพื่อใช้ฝึกซ้ำ)
+        </div>
+      </div>
+
+      <div id="resumeBanner" class="alert-box alert-info hidden">
+        <span id="resumeText"></span>
+        <button type="button" id="clearSavedBtn" class="btn btn-sm btn-secondary">เริ่มใหม่ทั้งหมด</button>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px;">
+        <button type="button" id="startActivityBtn" class="btn btn-primary">▶ เริ่มทำกิจกรรม</button>
+      </div>
+
+      <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+        <h2>เกณฑ์การประเมินผล (Rubric 4 ระดับ)</h2>
+        <div class="table-wrap" id="introRubricContainer"></div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: QUIZ / PRACTICE WORKSPACE -->
+    <section id="quizScreen" class="card hidden">
+      <div class="quiz-status-bar">
+        <div>
+          <strong id="studentHeaderLabel">นักเรียนเลขที่ -</strong>
+          <span class="muted" id="progressLabel"> | ข้อที่ 1 จาก 10</span>
+        </div>
+        <div class="timer-pill" id="timerDisplay">⏱ เหลือเวลา 20:00</div>
+      </div>
+
+      <div class="progress-track" aria-label="แถบความคืบหน้า">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <!-- 10 Question Quick Jump Pills -->
+      <div class="q-nav-grid" id="qNavGrid"></div>
+
+      <!-- Active Problem Area -->
+      <div class="problem-box">
+        <div class="problem-type-tag" id="qTypeTag">โจทย์ปัญหาการบวก</div>
+        <div class="problem-story" id="qStoryText"></div>
+        <div class="math-equation-display" id="qEquationText"></div>
+
+        <div class="visual-aid">
+          <div class="visual-caption" id="visualCaption">แผนภาพกรอบสิบ (Ten-Frame) ช่วยนับ:</div>
+          <div class="ten-frame" id="tenFrameGrid"></div>
+        </div>
+      </div>
+
+      <!-- Short Answer Input -->
+      <div class="input-group">
+        <label for="answerInput">พิมพ์คำตอบของนักเรียน (จำนวนเต็ม 0 – 10):</label>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+          <input
+            type="number"
+            id="answerInput"
+            min="0"
+            max="10"
+            step="1"
+            inputmode="numeric"
+            placeholder="พิมพ์คำตอบ 0 - 10"
+          />
+          <button type="button" id="checkInstantBtn" class="btn btn-secondary">💡 ตรวจคำตอบข้อนี้และดูวิธีคิด</button>
+        </div>
+        <div class="hint-text">
+          คำแนะนำขอบเขต: คำตอบเป็นจำนวนนับเต็มหน่วยตั้งแต่ 0 ถึง 10 (ค่าคลาดเคลื่อนที่ยอมรับได้: ±0 ต้องตรงจำนวนเต็ม)
+        </div>
+      </div>
+
+      <!-- Instant Explanation Panel (Practice Mode Behavior) -->
+      <div id="instantFeedbackBox" class="feedback-panel hidden">
+        <div id="instantFeedbackTitle" style="font-weight: 800; font-size: 1.05rem; margin-bottom: 6px;"></div>
+        <div id="instantFeedbackDetail"></div>
+      </div>
+
+      <!-- Navigation & Final Submit -->
+      <div class="nav-actions">
+        <div style="display: flex; gap: 10px;">
+          <button type="button" id="prevBtn" class="btn btn-secondary">⬅ ข้อก่อนหน้า</button>
+          <button type="button" id="nextBtn" class="btn btn-primary">ข้อถัดไป ➡</button>
+        </div>
+        <button type="button" id="submitAllBtn" class="btn btn-success">✅ ตรวจ/ส่งคำตอบทั้งหมด</button>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: RESULTS & FULL EXPLANATIONS + RUBRIC -->
+    <section id="resultScreen" class="card hidden">
+      <div class="score-banner">
+        <div class="badge" id="resultStudentBadge" style="margin-bottom: 8px;">นักเรียนเลขที่ -</div>
+        <h2>สรุปผลการฝึกทักษะ คณิตศาสตร์ ป.1</h2>
+        <div class="score-big" id="scoreBigText">0 / 10 คะแนน</div>
+        <div id="rubricLevelSummary" style="font-weight: 700; font-size: 1.05rem; margin-top: 6px;"></div>
+        <p class="muted" id="timeUsedSummary" style="margin-top: 6px;"></p>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+        <button type="button" id="retrySameBtn" class="btn btn-primary">🔄 ฝึกซ้ำชุดเดิม (เลขที่เดิม)</button>
+        <button type="button" id="changeStudentBtn" class="btn btn-secondary">👤 เปลี่ยนเลขที่นักเรียน</button>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <h2>ตารางเกณฑ์การประเมิน (Rubric 4 ระดับ)</h2>
+        <div class="table-wrap" id="resultRubricContainer"></div>
+      </div>
+
+      <h2>เฉลยละเอียดและคำอธิบายเหตุผลครบทั้ง 10 ข้อ</h2>
+      <p class="muted" style="margin-bottom: 14px;">
+        เปรียบเทียบคำตอบของนักเรียนกับแนวคำตอบที่ถูกต้องและขั้นตอนวิธีคิดด้านล่าง
+      </p>
+      <div id="reviewListContainer"></div>
+    </section>
+  </main>
+
+  <!-- TEACHER MODE MODAL -->
+  <div id="teacherModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="teacherModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h2 id="teacherModalTitle" style="margin-bottom: 2px;">👩‍🏫 แผงตรวจสอบสำหรับครู (Teacher Mode)</h2>
+          <div class="muted" style="font-size: 0.85rem;">ตรวจสอบชุดโจทย์เฉพาะบุคคล Strategy A (Numerical Variation)</div>
+        </div>
+        <button type="button" id="closeTeacherBtn" class="btn btn-sm btn-secondary">✕ ปิดหน้าต่าง</button>
+      </div>
+
+      <div class="alert-box alert-warning" style="margin-bottom: 14px;">
+        <span>
+          ⚠️ <strong>หมายเหตุสำคัญ:</strong> เว็บแอปพลิเคชันนี้ทำงานบนฝั่งผู้เรียน (Client-Side) จึงไม่สามารถซ่อนเฉลยจากโค้ดเบราว์เซอร์ได้ 100% (โปรดตรวจโจทย์และเฉลยก่อนนำไปใช้จริง)
+        </span>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <label for="teacherStudentSelect" style="margin: 0;">เลือกดูชุดโจทย์ของนักเรียนเลขที่:</label>
+        <select id="teacherStudentSelect" style="max-width: 180px; padding: 8px 12px; font-size: 1rem;">
+          <option value="1">เลขที่ 1</option>
+          <option value="2">เลขที่ 2</option>
+          <option value="3">เลขที่ 3</option>
+          <option value="4">เลขที่ 4</option>
+          <option value="5">เลขที่ 5</option>
+          <option value="6">เลขที่ 6</option>
+          <option value="7">เลขที่ 7</option>
+          <option value="8">เลขที่ 8</option>
+          <option value="9">เลขที่ 9</option>
+          <option value="10">เลขที่ 10</option>
+        </select>
+      </div>
+
+      <div class="stats-grid" id="teacherStatsGrid"></div>
+
+      <h3 style="font-size: 1.05rem; margin: 14px 0 8px;">เกณฑ์การประเมิน (Rubric) ประจำกิจกรรม</h3>
+      <div class="table-wrap" id="teacherRubricContainer"></div>
+
+      <h3 style="font-size: 1.05rem; margin: 18px 0 8px;" id="teacherListHeading">รายการโจทย์และเฉลยทั้ง 10 ข้อ</h3>
+      <div id="teacherQuestionsContainer"></div>
+    </div>
+  </div>
+
+  <footer>
+    สื่อการเรียนรู้รายวิชาคณิตศาสตร์พื้นฐาน ชั้นประถมศึกษาปีที่ 1 | <strong>ผู้สร้าง: ครูโบท | โรงเรียน: บ้านปางหมู</strong>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* =========================================================================
+       * 1. DETERMINISTIC PRNG (MULBERRY32) — NO UNSEEDED Math.random()
+       * ========================================================================= */
+      function mulberry32(seed) {
+        let t = seed >>> 0;
+        return function () {
+          t += 0x6D2B79F5;
+          let r = Math.imul(t ^ (t >>> 15), 1 | t);
+          r ^= r + Math.imul(r ^ (r >>> 7), 61 | r);
+          return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+
+      function randInt(rng, min, max) {
+        return Math.floor(rng() * (max - min + 1)) + min;
+      }
+
+      /* =========================================================================
+       * 2. RUBRIC DATA (4 LEVELS FOR SHORT ANSWER / PROBLEM SOLVING)
+       * ========================================================================= */
+      const RUBRIC_LEVELS = [
+        {
+          level: "ระดับ 4 (ดีเยี่ยม)",
+          scoreRange: "9 – 10 คะแนน",
+          criteria: "คำนวณหาผลบวกและผลลบไม่เกิน 10 ได้ถูกต้องแม่นยำเกือบทุกข้อ เข้าใจความหมายของโจทย์ปัญหาและการหาตัวไม่ทราบค่าอย่างสมบูรณ์"
+        },
+        {
+          level: "ระดับ 3 (ดี)",
+          scoreRange: "7 – 8 คะแนน",
+          criteria: "คำนวณหาผลบวกและผลลบไม่เกิน 10 ได้ถูกต้องเป็นส่วนใหญ่ อาจคลาดเคลื่อนเล็กน้อยในข้อที่สลับตำแหน่งตัวไม่ทราบค่า"
+        },
+        {
+          level: "ระดับ 2 (พอใช้)",
+          scoreRange: "5 – 6 คะแนน",
+          criteria: "คำนวณบวกหรือลบพื้นฐานได้บางส่วน ยังสับสนระหว่างการนับเพิ่ม (บวก) และการนับลด (ลบ) ในโจทย์สถานการณ์"
+        },
+        {
+          level: "ระดับ 1 (ควรปรับปรุง)",
+          scoreRange: "0 – 4 คะแนน",
+          criteria: "ยังไม่สามารถหาคำตอบได้ถูกต้อง ควรฝึกนับวัตถุจริงหรือใช้แผนภาพกรอบสิบ (Ten-Frame) ประกอบการบวกและลบเพิ่มเติม"
+        }
+      ];
+
+      function renderRubricTable(containerEl) {
+        containerEl.textContent = "";
+        const table = document.createElement("table");
+        const thead = document.createElement("thead");
+        const headRow = document.createElement("tr");
+        ["ระดับคุณภาพ", "ช่วงคะแนน", "เกณฑ์การพิจารณาคำตอบและความเข้าใจ"].forEach((text) => {
+          const th = document.createElement("th");
+          th.textContent = text;
+          headRow.appendChild(th);
+        });
+        thead.appendChild(headRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+        RUBRIC_LEVELS.forEach((row) => {
+          const tr = document.createElement("tr");
+          const td1 = document.createElement("td");
+          td1.style.fontWeight = "700";
+          td1.textContent = row.level;
+          const td2 = document.createElement("td");
+          td2.textContent = row.scoreRange;
+          const td3 = document.createElement("td");
+          td3.textContent = row.criteria;
+          tr.appendChild(td1);
+          tr.appendChild(td2);
+          tr.appendChild(td3);
+          tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+        containerEl.appendChild(table);
+      }
+
+      /* =========================================================================
+       * 3. STRATEGY A (NUMERICAL VARIATION) — 10-QUESTION GENERATOR PER STUDENT
+       *    Medium difficulty for Grade 1: results & operands strictly within 0..10
+       * ========================================================================= */
+      function generateQuestionsForStudent(studentNo) {
+        const questions = [];
+
+        for (let qIdx = 0; qIdx < 10; qIdx++) {
+          // Unique deterministic seed combining Student Number (1-10) and Question Index (1-10)
+          const seed = ((studentNo * 10007) + ((qIdx + 1) * 7919)) >>> 0;
+          const rng = mulberry32(seed);
+
+          let q = null;
+
+          switch (qIdx) {
+            case 0: {
+              // Q1: Basic Addition (sum 5..9)
+              const a = randInt(rng, 2, 5);
+              const b = randInt(rng, 2, 9 - a);
+              const ans = a + b;
+              q = {
+                typeLabel: "ข้อที่ 1 • การบวกจำนวนสองจำนวน",
+                story: `จงหาผลบวกของจำนวนต่อไปนี้`,
+                equation: `${a} + ${b} = [ ? ]`,
+                answer: ans,
+                visual: { mode: "add", first: a, second: b },
+                keyConcept: `ผลบวกที่ถูกต้องคือ ${ans} (จำนวนเต็มหน่วย 0–10)`,
+                explanation: `เริ่มจากมีอยู่ ${a} นับเพิ่มไปอีก ${b} (นับต่อ: ${Array.from({ length: b }, (_, i) => a + i + 1).join(", ")}) จะได้ผลลัพธ์เท่ากับ ${ans}`
+              };
+              break;
+            }
+            case 1: {
+              // Q2: Basic Subtraction (minuend 6..10, subtrahend 2..minuend-1)
+              const a = randInt(rng, 6, 10);
+              const b = randInt(rng, 2, a - 1);
+              const ans = a - b;
+              q = {
+                typeLabel: "ข้อที่ 2 • การลบจำนวนสองจำนวน",
+                story: `จงหาผลลบของจำนวนต่อไปนี้`,
+                equation: `${a} - ${b} = [ ? ]`,
+                answer: ans,
+                visual: { mode: "sub", total: a, remove: b },
+                keyConcept: `ผลลบที่ถูกต้องคือ ${ans} (จำนวนเต็มหน่วย 0–10)`,
+                explanation: `มีอยู่ทั้งหมด ${a} หักออกหรือเอาออกไป ${b} จะเหลืออยู่ ${ans} (ตรวจสอบ: ${ans} + ${b} = ${a})`
+              };
+              break;
+            }
+            case 2: {
+              // Q3: Word Problem - Addition (Fruit / School items)
+              const items = ["ดินสอ", "ยางลบ", "สมุด", "ลูกแก้ว", "ดอกไม้"];
+              const item = items[randInt(rng, 0, items.length - 1)];
+              const a = randInt(rng, 3, 6);
+              const b = randInt(rng, 2, 10 - a);
+              const ans = a + b;
+              q = {
+                typeLabel: "ข้อที่ 3 • โจทย์ปัญหาการบวก",
+                story: `ต้นกล้ามี${item} ${a} อัน คุณแม่ซื้อให้อีก ${b} อัน ต้นกล้ามี${item}ทั้งหมดกี่อัน?`,
+                equation: `ประโยคสัญลักษณ์: ${a} + ${b} = [ ? ]`,
+                answer: ans,
+                visual: { mode: "add", first: a, second: b },
+                keyConcept: `คำตอบคือ ${ans} อัน (นำจำนวนเดิมมารวมกับที่ซื้อเพิ่ม)`,
+                explanation: `คำว่า "ซื้อให้อีก" และ "ทั้งหมด" หมายถึงการนำมารวมกัน จึงเขียนประโยคสัญลักษณ์ ${a} + ${b} = ${ans} อัน`
+              };
+              break;
+            }
+            case 3: {
+              // Q4: Word Problem - Subtraction (Sharing / Eating)
+              const snacks = ["ส้ม", "ชมพู่", "คุกกี้", "กล้วยน้ำว้า", "ซาลาเปา"];
+              const snack = snacks[randInt(rng, 0, snacks.length - 1)];
+              const a = randInt(rng, 7, 10);
+              const b = randInt(rng, 2, a - 2);
+              const ans = a - b;
+              q = {
+                typeLabel: "ข้อที่ 4 • โจทย์ปัญหาการลบ",
+                story: `ในจานมี${snack} ${a} ชิ้น แบ่งให้น้องรับประทานไป ${b} ชิ้น เหลือ${snack}ในจานกี่ชิ้น?`,
+                equation: `ประโยคสัญลักษณ์: ${a} - ${b} = [ ? ]`,
+                answer: ans,
+                visual: { mode: "sub", total: a, remove: b },
+                keyConcept: `คำตอบคือ ${ans} ชิ้น (นำจำนวนทั้งหมดหักออกด้วยจำนวนที่แบ่งไป)`,
+                explanation: `มี${snack} ${a} ชิ้น แบ่งให้ไป ${b} ชิ้น ทำให้จำนวนลดลง จึงใช้การลบ: ${a} - ${b} = ${ans} ชิ้น`
+              };
+              break;
+            }
+            case 4: {
+              // Q5: Making 10 (Number Bonds to 10)
+              const a = randInt(rng, 2, 8);
+              const ans = 10 - a;
+              q = {
+                typeLabel: "ข้อที่ 5 • ความสัมพันธ์ของจำนวนแบบส่วนย่อย-ส่วนรวม (ครบ 10)",
+                story: `ต้องเติมตัวเลขใดลงในช่องว่าง เพื่อให้บวกกันได้เท่ากับ 10 พอดี?`,
+                equation: `${a} + [ ? ] = 10`,
+                answer: ans,
+                visual: { mode: "add", first: a, second: ans },
+                keyConcept: `ตัวเลขที่หายไปคือ ${ans} (คู่บวกของ ${a} ที่ได้ 10)`,
+                explanation: `ในกรอบสิบมีช่องทั้งหมด 10 ช่อง หากมีอยู่แล้ว ${a} ช่อง จะเหลือช่องว่างอีก 10 - ${a} = ${ans} ช่อง ดังนั้น ${a} + ${ans} = 10`
+              };
+              break;
+            }
+            case 5: {
+              // Q6: Zero Property (Addition or Subtraction with 0)
+              const isAdd = randInt(rng, 0, 1) === 1;
+              const n = randInt(rng, 4, 9);
+              if (isAdd) {
+                q = {
+                  typeLabel: "ข้อที่ 6 • สมบัติของศูนย์ในการบวก",
+                  story: `ในตะกร้ามีมะม่วง ${n} ผล ยังไม่ได้เก็บมาเพิ่มอีกเลย (0 ผล) ในตะกร้ามีมะม่วงกี่ผล?`,
+                  equation: `${n} + 0 = [ ? ]`,
+                  answer: n,
+                  visual: { mode: "add", first: n, second: 0 },
+                  keyConcept: `คำตอบคือ ${n} (จำนวนใดบวกกับ 0 ย่อมได้จำนวนเดิม)`,
+                  explanation: `ศูนย์ (0) หมายถึงไม่มีเพิ่ม ดังนั้น ${n} + 0 = ${n}`
+                };
+              } else {
+                q = {
+                  typeLabel: "ข้อที่ 7 • สมบัติของศูนย์ในการลบ",
+                  story: `มีลูกโป่งอยู่ ${n} ลูก ไม่แตกเลยสักลูก (0 ลูก) เหลือลูกโป่งกี่ลูก?`,
+                  equation: `${n} - 0 = [ ? ]`,
+                  answer: n,
+                  visual: { mode: "sub", total: n, remove: 0 },
+                  keyConcept: `คำตอบคือ ${n} (จำนวนใดลบด้วย 0 ย่อมได้จำนวนเดิม)`,
+                  explanation: `การลบด้วย 0 หมายถึงไม่ได้เอาออกไปเลย ดังนั้น ${n} - 0 = ${n}`
+                };
+              }
+              break;
+            }
+            case 6: {
+              // Q7: Missing Subtrahend (a - [?] = c)
+              const a = randInt(rng, 7, 10);
+              const c = randInt(rng, 2, a - 2);
+              const ans = a - c;
+              q = {
+                typeLabel: "ข้อที่ 7 • การหาตัวไม่ทราบค่าในประโยคสัญลักษณ์การลบ",
+                story: `มีนกเกาะอยู่บนกิ่งไม้ ${a} ตัว บินหนีไปกี่ตัว จึงเหลือนกอยู่ ${c} ตัว?`,
+                equation: `${a} - [ ? ] = ${c}`,
+                answer: ans,
+                visual: { mode: "sub", total: a, remove: ans },
+                keyConcept: `ตัวเลขที่หายไปคือ ${ans} ตัว (คิดจาก ${a} - ${c} = ${ans})`,
+                explanation: `จากเดิมมี ${a} ตัว เหลืออยู่ ${c} ตัว แสดงว่าส่วนที่หายไปคือ ${a} - ${c} = ${ans} ตัว (ตรวจคำตอบ: ${a} - ${ans} = ${c})`
+              };
+              break;
+            }
+            case 7: {
+              // Q8: Comparison Word Problem ("มากกว่าอยู่เท่าไร" / Difference)
+              const red = randInt(rng, 6, 10);
+              const blue = randInt(rng, 2, red - 2);
+              const ans = red - blue;
+              q = {
+                typeLabel: "ข้อที่ 8 • การเปรียบเทียบจำนวน (มากกว่าอยู่เท่าไร)",
+                story: `มีลูกบอลสีแดง ${red} ลูก และลูกบอลสีฟ้า ${blue} ลูก ลูกบอลสีแดงมีมากกว่าสีฟ้ากี่ลูก?`,
+                equation: `เปรียบเทียบ: ${red} - ${blue} = [ ? ]`,
+                answer: ans,
+                visual: { mode: "sub", total: red, remove: blue },
+                keyConcept: `คำตอบคือ ${ans} ลูก (หาผลต่างด้วยการลบ)`,
+                explanation: `การถามว่า "มากกว่าอยู่เท่าไร" คือการหาผลต่างระหว่างสองจำนวน โดยนำจำนวนที่มากกว่าลบด้วยจำนวนที่น้อยกว่า: ${red} - ${blue} = ${ans} ลูก`
+              };
+              break;
+            }
+            case 8: {
+              // Q9: Three-number Addition within 10 (a + b + c <= 10)
+              const a = randInt(rng, 1, 3);
+              const b = randInt(rng, 2, 4);
+              const c = randInt(rng, 1, 10 - a - b);
+              const ans = a + b + c;
+              q = {
+                typeLabel: "ข้อที่ 9 • การบวกเลขสามจำนวน (ผลลัพธ์ไม่เกิน 10)",
+                story: `จงหาผลบวกของจำนวนสามจำนวนต่อไปนี้`,
+                equation: `${a} + ${b} + ${c} = [ ? ]`,
+                answer: ans,
+                visual: { mode: "add", first: a + b, second: c },
+                keyConcept: `ผลบวกทั้งหมดคือ ${ans} (บวกทีละคู่จากซ้ายไปขวา)`,
+                explanation: `ขั้นที่ 1: นำคู่แรกบวกกันก่อน (${a} + ${b} = ${a + b}) ขั้นที่ 2: นำผลลัพธ์ที่ได้บวกกับตัวที่สาม (${a + b} + ${c} = ${ans})`
+              };
+              break;
+            }
+            case 9: {
+              // Q10: Two-step Mixed Operation within 10 (a + b - c, keeping intermediate <= 10)
+              const a = randInt(rng, 4, 6);
+              const b = randInt(rng, 2, 10 - a);
+              const mid = a + b;
+              const c = randInt(rng, 2, mid - 1);
+              const ans = mid - c;
+              q = {
+                typeLabel: "ข้อที่ 10 • โจทย์ปัญหาการบวกและลบระคน",
+                story: `บนรถโรงเรียนมีนักเรียน ${a} คน รับขึ้นมาเพิ่มอีก ${b} คน ต่อมามีนักเรียนลงรถไป ${c} คน ตอนนี้บนรถเหลือนักเรียนกี่คน?`,
+                equation: `(${a} + ${b}) - ${c} = [ ? ]`,
+                answer: ans,
+                visual: { mode: "sub", total: mid, remove: c },
+                keyConcept: `คำตอบคือ ${ans} คน (รวมคนขึ้นรถก่อน แล้วลบคนที่ลงรถ)`,
+                explanation: `ขั้นที่ 1: รวมนักเรียนที่ขึ้นมาเพิ่ม (${a} + ${b} = ${mid} คน) ขั้นที่ 2: ลบนักเรียนที่ลงรถไป (${mid} - ${c} = ${ans} คน)`
+              };
+              break;
+            }
+          }
+
+          questions.push({
+            index: qIdx,
+            number: qIdx + 1,
+            seed: seed,
+            ...q
+          });
+        }
+
+        return questions;
+      }
+
+      /* =========================================================================
+       * 4. APPLICATION STATE & SAFE STORAGE HELPERS
+       * ========================================================================= */
+      const STORAGE_KEY = "kru_boat_math_p1_within10_v1";
+      const TOTAL_SECONDS = 20 * 60; // 20 minutes
+
+      const state = {
+        studentNo: null,
+        questions: [],
+        userAnswers: Array(10).fill(""),
+        checkedFlags: Array(10).fill(false),
+        currentIdx: 0,
+        remainingSeconds: TOTAL_SECONDS,
+        timerId: null,
+        submitted: false
+      };
+
+      function safeSaveState() {
+        if (!state.studentNo) return;
+        try {
+          const payload = {
+            studentNo: state.studentNo,
+            userAnswers: state.userAnswers,
+            checkedFlags: state.checkedFlags,
+            currentIdx: state.currentIdx,
+            remainingSeconds: state.remainingSeconds,
+            submitted: state.submitted
+          };
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        } catch (err) {
+          // Ignore storage quota or sandbox restrictions silently
+        }
+      }
+
+      function safeLoadState() {
+        try {
+          const raw = window.localStorage.getItem(STORAGE_KEY);
+          if (!raw) return null;
+          const parsed = JSON.parse(raw);
+          if (
+            parsed &&
+            Number.isInteger(parsed.studentNo) &&
+            parsed.studentNo >= 1 &&
+            parsed.studentNo <= 10 &&
+            Array.isArray(parsed.userAnswers) &&
+            parsed.userAnswers.length === 10
+          ) {
+            return parsed;
+          }
+        } catch (err) {
+          return null;
+        }
+        return null;
+      }
+
+      function safeClearState() {
+        try {
+          window.localStorage.removeItem(STORAGE_KEY);
+        } catch (err) {
+          // Ignore sandbox restriction
+        }
+      }
+
+      /* =========================================================================
+       * 5. DOM REFERENCES
+       * ========================================================================= */
+      const globalAlert = document.getElementById("globalAlert");
+      const globalAlertText = document.getElementById("globalAlertText");
+      const closeAlertBtn = document.getElementById("closeAlertBtn");
+
+      const startScreen = document.getElementById("startScreen");
+      const quizScreen = document.getElementById("quizScreen");
+      const resultScreen = document.getElementById("resultScreen");
+
+      const studentNoInput = document.getElementById("studentNoInput");
+      const startActivityBtn = document.getElementById("startActivityBtn");
+      const resumeBanner = document.getElementById("resumeBanner");
+      const resumeText = document.getElementById("resumeText");
+      const clearSavedBtn = document.getElementById("clearSavedBtn");
+
+      const studentHeaderLabel = document.getElementById("studentHeaderLabel");
+      const progressLabel = document.getElementById("progressLabel");
+      const timerDisplay = document.getElementById("timerDisplay");
+      const progressFill = document.getElementById("progressFill");
+      const qNavGrid = document.getElementById("qNavGrid");
+
+      const qTypeTag = document.getElementById("qTypeTag");
+      const qStoryText = document.getElementById("qStoryText");
+      const qEquationText = document.getElementById("qEquationText");
+      const visualCaption = document.getElementById("visualCaption");
+      const tenFrameGrid = document.getElementById("tenFrameGrid");
+
+      const answerInput = document.getElementById("answerInput");
+      const checkInstantBtn = document.getElementById("checkInstantBtn");
+      const instantFeedbackBox = document.getElementById("instantFeedbackBox");
+      const instantFeedbackTitle = document.getElementById("instantFeedbackTitle");
+      const instantFeedbackDetail = document.getElementById("instantFeedbackDetail");
+
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const submitAllBtn = document.getElementById("submitAllBtn");
+
+      const resultStudentBadge = document.getElementById("resultStudentBadge");
+      const scoreBigText = document.getElementById("scoreBigText");
+      const rubricLevelSummary = document.getElementById("rubricLevelSummary");
+      const timeUsedSummary = document.getElementById("timeUsedSummary");
+      const retrySameBtn = document.getElementById("retrySameBtn");
+      const changeStudentBtn = document.getElementById("changeStudentBtn");
+      const reviewListContainer = document.getElementById("reviewListContainer");
+
+      const openTeacherBtn = document.getElementById("openTeacherBtn");
+      const teacherModal = document.getElementById("teacherModal");
+      const closeTeacherBtn = document.getElementById("closeTeacherBtn");
+      const teacherStudentSelect = document.getElementById("teacherStudentSelect");
+      const teacherStatsGrid = document.getElementById("teacherStatsGrid");
+      const teacherListHeading = document.getElementById("teacherListHeading");
+      const teacherQuestionsContainer = document.getElementById("teacherQuestionsContainer");
+
+      /* =========================================================================
+       * 6. UI HELPERS & VALIDATION
+       * ========================================================================= */
+      function showAlert(msg) {
+        globalAlertText.textContent = msg;
+        globalAlert.classList.remove("hidden");
+      }
+
+      function hideAlert() {
+        globalAlert.classList.add("hidden");
+        globalAlertText.textContent = "";
+      }
+
+      closeAlertBtn.addEventListener("click", hideAlert);
+
+      function formatTime(sec) {
+        const safeSec = Math.max(0, sec);
+        const m = Math.floor(safeSec / 60);
+        const s = safeSec % 60;
+        return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+      }
+
+      function parseValidIntegerAnswer(rawStr) {
+        const trimmed = String(rawStr ?? "").trim();
+        if (trimmed === "") return null;
+        if (!/^-?\d+$/.test(trimmed)) return NaN;
+        const num = Number(trimmed);
+        return Number.isSafeInteger(num) ? num : NaN;
+      }
+
+      function renderTenFrame(container, visual) {
+        container.textContent = "";
+        for (let i = 0; i < 10; i++) {
+          const cell = document.createElement("div");
+          cell.className = "tf-cell";
+          const dot = document.createElement("div");
+
+          if (visual.mode === "add") {
+            if (i < visual.first) {
+              dot.className = "dot dot-blue";
+              cell.appendChild(dot);
+            } else if (i < visual.first + visual.second) {
+              dot.className = "dot dot-amber";
+              cell.appendChild(dot);
+            }
+          } else if (visual.mode === "sub") {
+            if (i < visual.total) {
+              if (i >= visual.total - visual.remove) {
+                dot.className = "dot dot-crossed";
+              } else {
+                dot.className = "dot dot-blue";
+              }
+              cell.appendChild(dot);
+            }
+          }
+          container.appendChild(cell);
+        }
+      }
+
+      /* =========================================================================
+       * 7. TIMER MANAGEMENT
+       * ========================================================================= */
+      function stopTimer() {
+        if (state.timerId !== null) {
+          clearInterval(state.timerId);
+          state.timerId = null;
+        }
+      }
+
+      function startTimer() {
+        stopTimer();
+        timerDisplay.textContent = `⏱ เหลือเวลา ${formatTime(state.remainingSeconds)}`;
+        state.timerId = setInterval(() => {
+          state.remainingSeconds -= 1;
+          timerDisplay.textContent = `⏱ เหลือเวลา ${formatTime(state.remainingSeconds)}`;
+          if (state.remainingSeconds % 5 === 0) {
+            safeSaveState();
+          }
+          if (state.remainingSeconds <= 0) {
+            stopTimer();
+            showAlert("หมดเวลาทำกิจกรรม 20 นาทีแล้ว ระบบตรวจคำตอบให้อัตโนมัติ");
+            finalizeAndShowResults();
+          }
+        }, 1000);
+      }
+
+      /* =========================================================================
+       * 8. QUIZ RENDERING & INTERACTIONS
+       * ========================================================================= */
+      function saveCurrentInputToState() {
+        const val = answerInput.value.trim();
+        state.userAnswers[state.currentIdx] = val;
+        safeSaveState();
+      }
+
+      function renderNavPills() {
+        qNavGrid.textContent = "";
+        for (let i = 0; i < 10; i++) {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "q-pill";
+          if (i === state.currentIdx) btn.classList.add("active");
+          if (state.userAnswers[i] !== "") btn.classList.add("answered");
+          btn.textContent = `ข้อ ${i + 1}`;
+          btn.addEventListener("click", () => {
+            saveCurrentInputToState();
+            state.currentIdx = i;
+            renderCurrentQuestion();
+          });
+          qNavGrid.appendChild(btn);
+        }
+      }
+
+      function renderInstantFeedback(q, rawVal) {
+        const parsed = parseValidIntegerAnswer(rawVal);
+        if (parsed === null) {
+          instantFeedbackBox.classList.add("hidden");
+          return;
+        }
+        if (Number.isNaN(parsed) || parsed < 0 || parsed > 10) {
+          instantFeedbackBox.className = "feedback-panel feedback-wrong";
+          instantFeedbackTitle.textContent = "⚠️ รูปแบบคำตอบไม่ถูกต้อง";
+          instantFeedbackDetail.textContent = "กรุณาพิมพ์ตัวเลขจำนวนเต็มตั้งแต่ 0 ถึง 10 เท่านั้น";
+          return;
+        }
+
+        const isCorrect = parsed === q.answer;
+        instantFeedbackBox.className = isCorrect
+          ? "feedback-panel feedback-correct"
+          : "feedback-panel feedback-wrong";
+
+        instantFeedbackTitle.textContent = isCorrect
+          ? `✅ ถูกต้อง! คำตอบคือ ${q.answer}`
+          : `❌ ยังไม่ถูกต้อง (คำตอบของนักเรียนคือ ${parsed} | คำตอบที่ถูกต้องคือ ${q.answer})`;
+
+        instantFeedbackDetail.textContent = "";
+        const pConcept = document.createElement("p");
+        pConcept.style.fontWeight = "700";
+        pConcept.style.marginBottom = "4px";
+        pConcept.textContent = `แนวคำตอบสำคัญ: ${q.keyConcept}`;
+
+        const pExp = document.createElement("p");
+        pExp.textContent = `คำอธิบายวิธีคิด: ${q.explanation}`;
+
+        instantFeedbackDetail.appendChild(pConcept);
+        instantFeedbackDetail.appendChild(pExp);
+      }
+
+      function renderCurrentQuestion() {
+        hideAlert();
+        const q = state.questions[state.currentIdx];
+
+        studentHeaderLabel.textContent = `นักเรียนเลขที่ ${state.studentNo}`;
+        progressLabel.textContent = ` | ข้อที่ ${state.currentIdx + 1} จาก 10`;
+
+        const answeredCount = state.userAnswers.filter((v) => v !== "").length;
+        const pct = Math.max(10, Math.round(((state.currentIdx + 1) / 10) * 100));
+        progressFill.style.width = `${pct}%`;
+
+        qTypeTag.textContent = q.typeLabel;
+        qStoryText.textContent = q.story;
+        qEquationText.textContent = q.equation;
+
+        visualCaption.textContent =
+          q.visual.mode === "add"
+            ? `แผนภาพกรอบสิบ (Ten-Frame): สีน้ำเงิน ${q.visual.first} จุด รวมกับสีส้ม ${q.visual.second} จุด`
+            : `แผนภาพกรอบสิบ (Ten-Frame): ทั้งหมด ${q.visual.total} จุด กากบาทออก ${q.visual.remove} จุด`;
+
+        renderTenFrame(tenFrameGrid, q.visual);
+
+        answerInput.value = state.userAnswers[state.currentIdx];
+
+        if (state.checkedFlags[state.currentIdx] && state.userAnswers[state.currentIdx] !== "") {
+          renderInstantFeedback(q, state.userAnswers[state.currentIdx]);
+        } else {
+          instantFeedbackBox.classList.add("hidden");
+        }
+
+        prevBtn.disabled = state.currentIdx === 0;
+        prevBtn.style.opacity = state.currentIdx === 0 ? "0.5" : "1";
+
+        nextBtn.textContent = state.currentIdx === 9 ? "ทบทวนข้อที่ 1 ↻" : "ข้อถัดไป ➡";
+
+        renderNavPills();
+        safeSaveState();
+      }
+
+      answerInput.addEventListener("input", () => {
+        const val = answerInput.value.trim();
+        state.userAnswers[state.currentIdx] = val;
+        // Reset instant check when user edits their answer
+        state.checkedFlags[state.currentIdx] = false;
+        instantFeedbackBox.classList.add("hidden");
+        renderNavPills();
+        safeSaveState();
+      });
+
+      checkInstantBtn.addEventListener("click", () => {
+        hideAlert();
+        const val = answerInput.value.trim();
+        const parsed = parseValidIntegerAnswer(val);
+        if (parsed === null) {
+          showAlert("กรุณาพิมพ์ตัวเลขคำตอบ (0 – 10) ก่อนกดตรวจคำตอบข้อนี้");
+          answerInput.focus();
+          return;
+        }
+        if (Number.isNaN(parsed) || parsed < 0 || parsed > 10) {
+          showAlert("คำตอบต้องเป็นจำนวนเต็มตั้งแต่ 0 ถึง 10 เท่านั้น");
+          answerInput.focus();
+          return;
+        }
+        state.userAnswers[state.currentIdx] = String(parsed);
+        state.checkedFlags[state.currentIdx] = true;
+        renderInstantFeedback(state.questions[state.currentIdx], String(parsed));
+        renderNavPills();
+        safeSaveState();
+      });
+
+      prevBtn.addEventListener("click", () => {
+        saveCurrentInputToState();
+        if (state.currentIdx > 0) {
+          state.currentIdx -= 1;
+          renderCurrentQuestion();
+        }
+      });
+
+      nextBtn.addEventListener("click", () => {
+        saveCurrentInputToState();
+        state.currentIdx = state.currentIdx < 9 ? state.currentIdx + 1 : 0;
+        renderCurrentQuestion();
+      });
+
+      submitAllBtn.addEventListener("click", () => {
+        saveCurrentInputToState();
+        // Validate any out-of-range answers politely
+        for (let i = 0; i < 10; i++) {
+          const parsed = parseValidIntegerAnswer(state.userAnswers[i]);
+          if (parsed !== null && (Number.isNaN(parsed) || parsed < 0 || parsed > 10)) {
+            state.currentIdx = i;
+            renderCurrentQuestion();
+            showAlert(`ข้อที่ ${i + 1} มีคำตอบอยู่นอกขอบเขต (0 – 10) กรุณาแก้ไขก่อนส่งคำตอบ`);
+            return;
+          }
+        }
+        finalizeAndShowResults();
+      });
+
+      function getRubricAssessment(score) {
+        if (score >= 9) return RUBRIC_LEVELS[0];
+        if (score >= 7) return RUBRIC_LEVELS[1];
+        if (score >= 5) return RUBRIC_LEVELS[2];
+        return RUBRIC_LEVELS[3];
+      }
+
+      function finalizeAndShowResults() {
+        stopTimer();
+        state.submitted = true;
+        safeSaveState();
+
+        let score = 0;
+        reviewListContainer.textContent = "";
+
+        state.questions.forEach((q, idx) => {
+          const parsed = parseValidIntegerAnswer(state.userAnswers[idx]);
+          const isCorrect = parsed !== null && !Number.isNaN(parsed) && parsed === q.answer;
+          if (isCorrect) score += 1;
+
+          const item = document.createElement("div");
+          item.className = `review-item ${isCorrect ? "ok" : "no"}`;
+
+          const header = document.createElement("div");
+          header.style.fontWeight = "800";
+          header.style.marginBottom = "6px";
+          header.textContent = `${isCorrect ? "✅" : "❌"} ข้อที่ ${q.number}: ${q.story}`;
+
+          const eqLine = document.createElement("div");
+          eqLine.style.fontWeight = "700";
+          eqLine.style.color = "#1e3a8a";
+          eqLine.style.marginBottom = "6px";
+          eqLine.textContent = q.equation;
+
+          const userAnsLine = document.createElement("div");
+          userAnsLine.style.marginBottom = "4px";
+          const displayUser =
+            parsed === null || Number.isNaN(parsed) ? "ไม่ได้ตอบ" : `${parsed}`;
+          userAnsLine.textContent = `คำตอบของนักเรียน: ${displayUser}  |  เฉลยที่ถูกต้อง: ${q.answer}`;
+
+          const conceptLine = document.createElement("div");
+          conceptLine.style.fontWeight = "600";
+          conceptLine.style.color = "#0f766e";
+          conceptLine.style.marginBottom = "4px";
+          conceptLine.textContent = `แนวคำตอบสำคัญ: ${q.keyConcept}`;
+
+          const expLine = document.createElement("div");
+          expLine.className = "muted";
+          expLine.textContent = `คำอธิบายเหตุผล: ${q.explanation}`;
+
+          item.appendChild(header);
+          item.appendChild(eqLine);
+          item.appendChild(userAnsLine);
+          item.appendChild(conceptLine);
+          item.appendChild(expLine);
+          reviewListContainer.appendChild(item);
+        });
+
+        const rubric = getRubricAssessment(score);
+        const usedSec = Math.max(0, TOTAL_SECONDS - state.remainingSeconds);
+
+        resultStudentBadge.textContent = `นักเรียนเลขที่ ${state.studentNo} | วิชาคณิตศาสตร์พื้นฐาน ป.1`;
+        scoreBigText.textContent = `${score} / 10 คะแนน`;
+        rubricLevelSummary.textContent = `ผลการประเมินตามเกณฑ์ Rubric: ${rubric.level} — ${rubric.criteria}`;
+        timeUsedSummary.textContent = `เวลาที่ใช้ทำกิจกรรม: ${formatTime(usedSec)} นาที`;
+
+        startScreen.classList.add("hidden");
+        quizScreen.classList.add("hidden");
+        resultScreen.classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      /* =========================================================================
+       * 9. START, RETRY, AND RESET FLOWS
+       * ========================================================================= */
+      function beginSession(studentNo, restoredData) {
+        hideAlert();
+        state.studentNo = studentNo;
+        state.questions = generateQuestionsForStudent(studentNo);
+
+        if (restoredData && restoredData.studentNo === studentNo) {
+          state.userAnswers = restoredData.userAnswers;
+          state.checkedFlags = restoredData.checkedFlags || Array(10).fill(false);
+          state.currentIdx = restoredData.currentIdx || 0;
+          state.remainingSeconds =
+            typeof restoredData.remainingSeconds === "number" && restoredData.remainingSeconds > 0
+              ? restoredData.remainingSeconds
+              : TOTAL_SECONDS;
+          state.submitted = Boolean(restoredData.submitted);
+        } else {
+          state.userAnswers = Array(10).fill("");
+          state.checkedFlags = Array(10).fill(false);
+          state.currentIdx = 0;
+          state.remainingSeconds = TOTAL_SECONDS;
+          state.submitted = false;
+        }
+
+        startScreen.classList.add("hidden");
+        resultScreen.classList.add("hidden");
+        quizScreen.classList.remove("hidden");
+
+        renderCurrentQuestion();
+        startTimer();
+      }
+
+      startActivityBtn.addEventListener("click", () => {
+        const raw = studentNoInput.value.trim();
+        const num = parseValidIntegerAnswer(raw);
+        if (num === null || Number.isNaN(num) || num < 1 || num > 10) {
+          showAlert("กรุณากรอกเลขที่นักเรียนเป็นตัวเลขจำนวนเต็มระหว่าง 1 ถึง 10");
+          studentNoInput.focus();
+          return;
+        }
+        const saved = safeLoadState();
+        beginSession(num, saved && saved.studentNo === num && !saved.submitted ? saved : null);
+      });
+
+      retrySameBtn.addEventListener("click", () => {
+        const no = state.studentNo;
+        safeClearState();
+        beginSession(no, null);
+      });
+
+      changeStudentBtn.addEventListener("click", () => {
+        stopTimer();
+        safeClearState();
+        state.studentNo = null;
+        studentNoInput.value = "";
+        resumeBanner.classList.add("hidden");
+        resultScreen.classList.add("hidden");
+        quizScreen.classList.add("hidden");
+        startScreen.classList.remove("hidden");
+      });
+
+      clearSavedBtn.addEventListener("click", () => {
+        safeClearState();
+        resumeBanner.classList.add("hidden");
+        studentNoInput.value = "";
+      });
+
+      /* =========================================================================
+       * 10. TEACHER MODE (INSPECT SEEDS 1-10, UNIQUENESS RATE, RUBRIC & ANSWERS)
+       * ========================================================================= */
+      function computeUniquenessStats() {
+        // Compare all 100 generated questions across Student Numbers 1..10
+        const allQuestionSignatures = [];
+        const perStudentSets = [];
+
+        for (let s = 1; s <= 10; s++) {
+          const qs = generateQuestionsForStudent(s);
+          const sigs = qs.map((q) => `${q.index}|${q.equation}|${q.answer}`);
+          perStudentSets.push(sigs);
+          allQuestionSignatures.push(...sigs);
+        }
+
+        const uniqueCount = new Set(allQuestionSignatures).size;
+        const totalCount = allQuestionSignatures.length; // 100
+        const uniquenessPct = Math.round((uniqueCount / totalCount) * 100);
+        const overlapPct = 100 - uniquenessPct;
+
+        return { uniqueCount, totalCount, uniquenessPct, overlapPct };
+      }
+
+      function renderTeacherInspect(studentNo) {
+        const questions = generateQuestionsForStudent(studentNo);
+        const stats = computeUniquenessStats();
+
+        teacherStatsGrid.textContent = "";
+        const statItems = [
+          { label: "เลขที่กำลังตรวจสอบ", val: `เลขที่ ${studentNo}` },
+          { label: "อัตราความแตกต่างของชุดโจทย์ (ป.1–ป.10)", val: `${stats.uniquenessPct}% (${stats.uniqueCount}/${stats.totalCount} ข้อไม่ซ้ำ)` },
+          { label: "อัตราความซ้ำของตัวเลขข้ามเลขที่", val: `${stats.overlapPct}% (คุมขอบเขต 0–10)` },
+          { label: "ระดับความยาก & เกณฑ์คำตอบ", val: "ปานกลาง (จำนวนเต็ม 0–10)" }
+        ];
+
+        statItems.forEach((st) => {
+          const box = document.createElement("div");
+          box.className = "stat-box";
+          const lbl = document.createElement("div");
+          lbl.className = "muted";
+          lbl.style.fontSize = "0.82rem";
+          lbl.textContent = st.label;
+          const val = document.createElement("div");
+          val.className = "stat-val";
+          val.textContent = st.val;
+          box.appendChild(lbl);
+          box.appendChild(val);
+          teacherStatsGrid.appendChild(box);
+        });
+
+        teacherListHeading.textContent = `รายการโจทย์และแนวคำตอบของนักเรียนเลขที่ ${studentNo} (ครบทั้ง 10 ข้อ)`;
+        teacherQuestionsContainer.textContent = "";
+
+        questions.forEach((q) => {
+          const card = document.createElement("div");
+          card.className = "review-item ok";
+
+          const top = document.createElement("div");
+          top.style.fontWeight = "800";
+          top.textContent = `${q.typeLabel} (Seed: ${q.seed})`;
+
+          const story = document.createElement("div");
+          story.style.margin = "4px 0";
+          story.textContent = `โจทย์: ${q.story}  |  ${q.equation}`;
+
+          const ans = document.createElement("div");
+          ans.style.fontWeight = "700";
+          ans.style.color = "#15803d";
+          ans.textContent = `เฉลย: ${q.answer}  —  ${q.keyConcept}`;
+
+          const exp = document.createElement("div");
+          exp.className = "muted";
+          exp.style.fontSize = "0.9rem";
+          exp.textContent = `คำอธิบายเหตุผล: ${q.explanation}`;
+
+          card.appendChild(top);
+          card.appendChild(story);
+          card.appendChild(ans);
+          card.appendChild(exp);
+          teacherQuestionsContainer.appendChild(card);
+        });
+      }
+
+      openTeacherBtn.addEventListener("click", () => {
+        const defaultNo = state.studentNo || 1;
+        teacherStudentSelect.value = String(defaultNo);
+        renderTeacherInspect(defaultNo);
+        teacherModal.classList.remove("hidden");
+      });
+
+      closeTeacherBtn.addEventListener("click", () => {
+        teacherModal.classList.add("hidden");
+      });
+
+      teacherModal.addEventListener("click", (e) => {
+        if (e.target === teacherModal) {
+          teacherModal.classList.add("hidden");
+        }
+      });
+
+      teacherStudentSelect.addEventListener("change", () => {
+        const selectedNo = Number(teacherStudentSelect.value) || 1;
+        renderTeacherInspect(selectedNo);
+      });
+
+      /* =========================================================================
+       * 11. INITIALIZATION ON PAGE LOAD
+       * ========================================================================= */
+      renderRubricTable(document.getElementById("introRubricContainer"));
+      renderRubricTable(document.getElementById("resultRubricContainer"));
+      renderRubricTable(document.getElementById("teacherRubricContainer"));
+
+      const existingSession = safeLoadState();
+      if (existingSession && !existingSession.submitted) {
+        studentNoInput.value = String(existingSession.studentNo);
+        const answeredCount = existingSession.userAnswers.filter((v) => v !== "").length;
+        resumeText.textContent = `พบประวัติการฝึกซ้อมค้างไว้ของนักเรียนเลขที่ ${existingSession.studentNo} (ทำไปแล้ว ${answeredCount}/10 ข้อ) กด "เริ่มทำกิจกรรม" เพื่อทำต่อได้ทันที`;
+        resumeBanner.classList.remove("hidden");
+      }
+    })();
+  </script>
+</body>
+</html>
